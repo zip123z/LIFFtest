@@ -20,17 +20,25 @@
         //你的liff app ID, 例如 --> 0000000000-spPeRmAn
         var YourLiffAppId = '2006561793-0WpV8bq9';
 
-        window.onload = function () {
-    liff.init({ liffId: '2006561793-0WpV8bq9' })
+        function initializeLiff() {
+          window.onload = function () {
+    liff.init({ liffId: YourLiffAppId })
         .then(() => {
             console.log('LIFF 初始化成功');
             alert('LIFF 初始化成功');
         })
         .catch((err) => {
             console.error('LIFF 初始化失敗:', err);
-            alert('LIFF 初始化失敗:', err);
+            alert('LIFF 初始化成功');
         });
 };
+}
+
+        $(document).ready(function () {
+
+
+            //init LIFF
+            initializeLiff();
 
 
             $('#ButtonScan').click(() => {
