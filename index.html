@@ -21,26 +21,35 @@
         var YourLiffAppId = '2006561793-pr0Ewevq';
 
         function initializeLiff(myLiffId) {
-            liff
-                .init({
-                    liffId: myLiffId
-                })
-                .then(() => {
-                    initializeApp();
-                    //取得QueryString
-                    let urlParams = new URLSearchParams(window.location.search);
-                    //顯示QueryString
-                    $('#QueryString').val(urlParams.toString());
-                    //顯示UserId
-                    liff.getProfile().then(function (e) {
-                        $('#field_info').val(e.userId);
-                    });
-                })
-                .catch((err) => {
-                    alert(JSON.stringify(err));
-                });
+    liff
+        .init({
+            liffId: myLiffId
+        })
+        .then(() => {
+            // 確認是否在 LINE App 中
+            if (!liff.isInClient()) {
+                alert("請在 LINE App 中開啟此應用！");
+                return;
+            }
 
-        }
+            // 初始化應用
+            initializeApp();
+
+            // 取得 QueryString
+            let urlParams = new URLSearchParams(window.location.search);
+            $('#QueryString').val(urlParams.toString() || "No QueryString Found");
+
+            // 顯示 UserId
+            liff.getProfile().then((profile) => {
+                $('#field_info').val(profile.userId);
+            }).catch((err) => {
+                alert(`無法取得用戶資訊：${JSON.stringify(err)}`);
+            });
+        })
+        .catch((err) => {
+            alert(`LIFF 初始化失敗：${JSON.stringify(err)}`);
+        });
+}
 
         $(document).ready(function () {
 
