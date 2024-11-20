@@ -67,12 +67,12 @@
             });
 
             //ButtonGetProfile
-            $('#ButtonGetProfile').click(() => {
+            $('#ButtonGetProfile_displayName').click(() => {
                 //取得User Proile
                 liff.getProfile().then(
                     (profile) => {
                         //顯示在text box中
-                        $('#field_info').val(JSON.parse(profile));
+                        $('#field_info').val(profile.displayName);
                         //可以alert
                         alert('done');
                     }
