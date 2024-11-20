@@ -179,6 +179,12 @@
             initializeLiff(YourLiffAppId);
 
             $('#ButtonScan').click(() => {
+              if (!liff.isInClient()) {
+                alert("請在 LINE App 中啟動此應用，QR Code 掃描功能無法在瀏覽器中使用！");
+                return;
+              }
+
+              
                liff.scanCodeV2().then((ret) => {
                     //alert(JSON.stringify(ret));
                     $('#field_info').val(ret.value);
