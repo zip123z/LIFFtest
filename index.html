@@ -19,6 +19,7 @@
     <script>
         //你的liff app ID, 例如 --> 0000000000-spPeRmAn
         var YourLiffAppId = '2006561793-0WpV8bq9';
+        window.onload = function () {
 
         function initializeLiff(myLiffId) {
     liff
@@ -50,6 +51,7 @@
             alert(`LIFF 初始化失敗：${JSON.stringify(err)}`);
         });
 }
+};
 
         $(document).ready(function () {
 
