@@ -189,7 +189,7 @@
                     //alert(JSON.stringify(ret));
                     $('#field_info').val(ret.value);
                 }, (err) => {
-                    alert(JSON.stringify(err));
+                    alert(`掃描失敗，錯誤訊息：${JSON.stringify(err)}`);
                 }
                 );
             });
