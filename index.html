@@ -1,78 +1,278 @@
+<!DOCTYPE html>
 <html>
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add an item to the spreadsheet</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rossorigin="anonymous">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/themes/base/jquery-ui.min.css">
-</head>
-<body>
-
-    <form class="w-75 mx-auto">
-        <p class="mt-3">Saisissez un mot, une expression ou une phrase en français.</p>
-        <div>
-            <input class="form-control w-100 mt-1" name="name" placeholder="" required>
-        </div>
-        <p class="mt-3">Traduction d'entrée pour cela.</p>
-        <div>
-            <input class="form-control w-100 mt-1" name="udetate" required>
-        </div>
-        <p class="mt-3">Donnez-moi des exemples pour utiliser ce mot.</p>
-        <div>
-            <input class="form-control w-100 mt-1" name="examples">
-        </div>
-        <input type="submit" class="mt-4 btn btn-primary" value="Send">
-    </form>
-
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" crossorigin="anonymous"></script>
-    <script charset="utf-8" src="https://static.line-scdn.net/liff/edge/2.1/sdk.js"></script>
+    <meta charset="utf-8" />
+    <title>LIFF 2.1 範例 (.NET Core)</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- bootstrap 4.3.1 -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="https://static.line-scdn.net/liff/edge/2.1/sdk.js"></script>
+    <style>
+        #MainDiv button {
+            margin: 3px;
+        }
+    </style>
     <script>
+        //你的liff app ID, 例如 --> 0000000000-spPeRmAn
+        var YourLiffAppId = '2006561793-pr0Ewevq';
+
+        function initializeLiff(myLiffId) {
+            liff
+                .init({
+                    liffId: myLiffId
+                })
+                .then(() => {
+                    initializeApp();
+                    //取得QueryString
+                    let urlParams = new URLSearchParams(window.location.search);
+                    //顯示QueryString
+                    $('#QueryString').val(urlParams.toString());
+                    //顯示UserId
+                    liff.getProfile().then(function (e) {
+                        $('#field_info').val(e.userId);
+                    });
+                })
+                .catch((err) => {
+                    alert(JSON.stringify(err));
+                });
+
+        }
 
         $(document).ready(function () {
-            const liffId = "2006561793-pr0Ewevq";
-            initializeLiff(liffId);
-        })
 
-        function initializeLiff(liffId) {
-            liff.init({
-                liffId: liffId
-            }).then(() => {
-                initializeApp();
-            }).catch((err) => {
-                console.log('LIFF Initialization failed ', err);
+
+            $('#FlexMessageContentObject').val(`
+{
+  "type": "bubble",
+  "body": {
+    "type": "box",
+    "layout": "vertical",
+    "contents": [
+      {
+        "type": "image",
+        "url": "https://scdn.line-apps.com/n/channel_devcenter/img/flexsnapshot/clip/clip3.jpg",
+        "size": "full",
+        "aspectMode": "cover",
+        "aspectRatio": "1:1",
+        "gravity": "center"
+      },
+      {
+        "type": "box",
+        "layout": "vertical",
+        "contents": [],
+        "position": "absolute",
+        "background": {
+          "type": "linearGradient",
+          "angle": "0deg",
+          "endColor": "#00000000",
+          "startColor": "#00000099"
+        },
+        "width": "100%",
+        "height": "40%",
+        "offsetBottom": "0px",
+        "offsetStart": "0px",
+        "offsetEnd": "0px"
+      },
+      {
+        "type": "box",
+        "layout": "horizontal",
+        "contents": [
+          {
+            "type": "box",
+            "layout": "vertical",
+            "contents": [
+              {
+                "type": "box",
+                "layout": "horizontal",
+                "contents": [
+                  {
+                    "type": "text",
+                    "text": "Brown Grand Hotel",
+                    "size": "xl",
+                    "color": "#ffffff"
+                  }
+                ]
+              },
+              {
+                "type": "box",
+                "layout": "baseline",
+                "contents": [
+                  {
+                    "type": "icon",
+                    "url": "https://scdn.line-apps.com/n/channel_devcenter/img/fx/review_gold_star_28.png"
+                  },
+                  {
+                    "type": "icon",
+                    "url": "https://scdn.line-apps.com/n/channel_devcenter/img/fx/review_gold_star_28.png"
+                  },
+                  {
+                    "type": "icon",
+                    "url": "https://scdn.line-apps.com/n/channel_devcenter/img/fx/review_gold_star_28.png"
+                  },
+                  {
+                    "type": "icon",
+                    "url": "https://scdn.line-apps.com/n/channel_devcenter/img/fx/review_gold_star_28.png"
+                  },
+                  {
+                    "type": "icon",
+                    "url": "https://scdn.line-apps.com/n/channel_devcenter/img/fx/review_gray_star_28.png"
+                  },
+                  {
+                    "type": "text",
+                    "text": "4.0",
+                    "color": "#a9a9a9"
+                  }
+                ],
+                "spacing": "xs"
+              },
+              {
+                "type": "box",
+                "layout": "horizontal",
+                "contents": [
+                  {
+                    "type": "box",
+                    "layout": "baseline",
+                    "contents": [
+                      {
+                        "type": "text",
+                        "text": "¥62,000",
+                        "color": "#ffffff",
+                        "size": "md",
+                        "flex": 0,
+                        "align": "end"
+                      },
+                      {
+                        "type": "text",
+                        "text": "¥82,000",
+                        "color": "#a9a9a9",
+                        "decoration": "line-through",
+                        "size": "sm",
+                        "align": "end"
+                      }
+                    ],
+                    "flex": 0,
+                    "spacing": "lg"
+                  }
+                ]
+              }
+            ],
+            "spacing": "xs"
+          }
+        ],
+        "position": "absolute",
+        "offsetBottom": "0px",
+        "offsetStart": "0px",
+        "offsetEnd": "0px",
+        "paddingAll": "20px"
+      }
+    ],
+    "paddingAll": "0px"
+  }
+}
+`);
+
+            //init LIFF
+            initializeLiff(YourLiffAppId);
+
+            $('#ButtonScan').click(() => {
+                liff.scanCode().then((ret) => {
+                    //alert(JSON.stringify(ret));
+                    $('#field_info').val(ret.value);
+                }, (err) => {
+                    alert(JSON.stringify(err));
+                }
+                );
             });
-        }
 
-        function sendText(text) {
-            liff.sendMessages([{
-                'type': 'text',
-                'text': text
-            }]).then(function () {
-                liff.closeWindow();
-            }).catch(function (error) {
-                window.alert('Failed to send message ' + error);
+            $('#ButtonGetOS').click(() => {
+                var info = liff.getOS();
+                $('#field_info').val(info);
             });
-        }
 
-        const params = (new URL(document.location)).searchParams;
-        const key = params.get('key');
+            $('#ButtonGetLanguage').click(() => {
+                var info = liff.getLanguage();
+                $('#field_info').val(info);
+            });
 
-        $(function () {
-            $('form').submit(function () {
-                const name    = $('input[name="name"]').val();
-                const udetate = $('input[name="udetate"]').val();
-                const examples = $('input[name="examples"]').val();
-                const msg = `> Ajouter un nouvel élément:\n${name}\n${udetate}\n${examples}`;
-                sendText(msg);
-                return false;
+            //ButtonGetProfile
+            $('#ButtonGetProfile').click(() => {
+                //取得User Proile
+                liff.getProfile().then(
+                    (profile) => {
+                        //顯示在text box中
+                        $('#field_info').val(profile.displayName);
+                        //可以alert
+                        alert('done');
+                    }
+                );
+            });
+
+            //ButtonSendMsg
+            $('#ButtonSendMsg').click(function () {
+                liff.sendMessages([
+                    {
+                        type: 'text',
+                        text: $('#msg').val()
+                    }
+                ])
+                    .then(() => {
+                        alert('done');
+                    })
+            });
+            //ButtonSendMsg
+            $('#ButtonSendshareTargetPickerMsg').click(function () {
+                liff.shareTargetPicker(
+                    [
+                        {
+                            "type": "flex",
+                            "altText": $('#FlexMessageContentAltText').val(),
+                            "contents": JSON.parse($('#FlexMessageContentObject').val())
+                        }
+                    ]
+                )
+                    .then(function (res) {
+                        if (res) {
+                            // succeeded in sending a message through TargetPicker
+                            alert(`[${res.status}] 訊息已送出!`);
+                        } else {
+                            // sending message canceled
+                            alert("TargetPicker was closed!");
+                        }
+                    })
+                    .catch(function (error) {
+                        // something went wrong before sending a message
+                        alert(error);
+                    });
             });
         });
-
     </script>
-
+</head>
+<body>
+    <div class="row">
+        <div id="MainDiv" class="col-md-6" style="margin:5px">
+            <label>QueryString:</label>
+            <input class="form-control" type="text" id="QueryString" /><br />
+            <label>info:</label>
+            <textarea class="form-control" rows="3" type="text" id="field_info"></textarea>   <br />
+            <button class="btn btn-primary" id="ButtonGetOS">Get OS info</button>
+            <button class="btn btn-primary" id="ButtonGetLanguage">Get Language</button>
+            <button class="btn btn-primary" id="ButtonScan">掃描 QR Code</button>
+            <button class="btn btn-primary" id="ButtonGetProfile">Get User Profile</button>
+            <hr />
+            <label>要傳送的訊息:</label>
+            <input class="form-control" type="text" id="msg" value="測試文字" /><br />
+            <button class="btn btn-primary" id="ButtonSendMsg">要傳送的訊息</button>
+            <hr />
+            <label>要以ShareTargetPicker傳送的Flex訊息:</label>
+            <input class="form-control" type="text" id="FlexMessageContentAltText" value="Flex圖文訊息" /><br />
+            <textarea class="form-control" type="text" id="FlexMessageContentObject" value="可使用Flex Message sim產生的訊息" cols="40" rows="5"></textarea><br />
+            <button class="btn btn-primary" id="ButtonSendshareTargetPickerMsg">Share Target Picker</button>
+            <hr />
+        </div>
+    </div>
 </body>
 </html>
