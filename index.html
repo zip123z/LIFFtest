@@ -48,6 +48,22 @@
               }
 
               
+               liff.scanCode().then((ret) => {
+                    //alert(JSON.stringify(ret));
+                    $('#field_info').val(ret.value);
+                }, (err) => {
+                    alert(`掃描失敗，錯誤訊息：${JSON.stringify(err)}`);
+                }
+                );
+            });
+
+            $('#ButtonScanV2').click(() => {
+              if (!liff.isInClient()) {
+                alert("請在 LINE App 中啟動此應用，QR Code 掃描功能無法在瀏覽器中使用！");
+                return;
+              }
+
+              
                liff.scanCodeV2().then((ret) => {
                     //alert(JSON.stringify(ret));
                     $('#field_info').val(ret.value);
@@ -130,6 +146,7 @@
             <button class="btn btn-primary" id="ButtonGetOS">Get OS info</button>
             <button class="btn btn-primary" id="ButtonGetLanguage">Get Language</button>
             <button class="btn btn-primary" id="ButtonScan">掃描 QR Code</button>
+            <button class="btn btn-primary" id="ButtonScanV2">掃描 QR Code V2</button>
             <button class="btn btn-primary" id="ButtonGetProfile">Get User Profile</button>
             <hr />
             <label>要傳送的訊息:</label>
