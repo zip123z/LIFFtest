@@ -179,7 +179,7 @@
             initializeLiff(YourLiffAppId);
 
             $('#ButtonScan').click(() => {
-                liff.scanCode().then((ret) => {
+               liff.scanCodeV2().then((ret) => {
                     //alert(JSON.stringify(ret));
                     $('#field_info').val(ret.value);
                 }, (err) => {
