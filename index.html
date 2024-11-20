@@ -23,7 +23,7 @@
         function initializeLiff(myLiffId) {
           liff.init({
               liffId: YourLiffAppId
-              }).then(function() {
+              }).then(function(profile) {
                 console.log('LIFF init');
                 $('#field_info').val(profile.userId);
   
@@ -145,6 +145,7 @@
             <button class="btn btn-primary" id="ButtonGetOS">Get OS info</button>
             <button class="btn btn-primary" id="ButtonGetLanguage">Get Language</button>
             <button class="btn btn-primary" id="ButtonScan">掃描 QR Code</button>
+            <button class="btn btn-primary" id="ButtonScanV2">掃描 QR Code V2</button>
             <button class="btn btn-primary" id="ButtonGetProfile">Get User Profile</button>
             <hr />
             <label>要傳送的訊息:</label>
