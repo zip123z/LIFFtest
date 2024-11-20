@@ -20,25 +20,26 @@
         //你的liff app ID, 例如 --> 0000000000-spPeRmAn
         var YourLiffAppId = '2006561793-0WpV8bq9';
 
-        function initializeLiff() {
-          window.onload = function () {
-    liff.init({ liffId: YourLiffAppId })
-        .then(() => {
-            console.log('LIFF 初始化成功');
-            alert('LIFF 初始化成功');
-        })
-        .catch((err) => {
-            console.error('LIFF 初始化失敗:', err);
-            alert('LIFF 初始化成功');
-        });
-};
+        function initializeLiff(myLiffId) {
+          liff.init({
+              liffId: liffID
+              }).then(function() {
+                console.log('LIFF init');
+                $('#field_info').val(profile.userId);
+  
+           // 這邊開始寫使用其他功能
+  
+          }).catch(function(error) {
+            console.log(error);
+            $('#field_info').val(error);
+          });
+
 }
 
         $(document).ready(function () {
 
-
             //init LIFF
-            initializeLiff();
+            initializeLiff(YourLiffAppId);
 
 
             $('#ButtonScan').click(() => {
@@ -46,7 +47,6 @@
                 alert("請在 LINE App 中啟動此應用，QR Code 掃描功能無法在瀏覽器中使用！");
                 return;
               }
-
               
                liff.scanCode().then((ret) => {
                     //alert(JSON.stringify(ret));
@@ -62,7 +62,6 @@
                 alert("請在 LINE App 中啟動此應用，QR Code 掃描功能無法在瀏覽器中使用！");
                 return;
               }
-
               
                liff.scanCodeV2().then((ret) => {
                     //alert(JSON.stringify(ret));
@@ -146,7 +145,6 @@
             <button class="btn btn-primary" id="ButtonGetOS">Get OS info</button>
             <button class="btn btn-primary" id="ButtonGetLanguage">Get Language</button>
             <button class="btn btn-primary" id="ButtonScan">掃描 QR Code</button>
-            <button class="btn btn-primary" id="ButtonScanV2">掃描 QR Code V2</button>
             <button class="btn btn-primary" id="ButtonGetProfile">Get User Profile</button>
             <hr />
             <label>要傳送的訊息:</label>
